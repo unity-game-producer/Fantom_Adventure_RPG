@@ -251,37 +251,32 @@
       const web3 = new Web3('https://rpc.ankr.com/fantom');
       // Retrieve the current gas price
       
-    window.getAggressiveGasPrice = function() {
-    return new Promise((resolve, reject) => {
-            // Retrieve the current gas price
-      web3.eth.getGasPrice()
-        .then(gasPrice => {
-          // Convert the gas price to BigInt
-          const gasPriceBigInt = BigInt(gasPrice);
+      window.getAggressiveGasPrice = async function() {
+      try {
+        // Retrieve the current gas price
+        const gasPrice = await web3.eth.getGasPrice();
 
-          // Adjust the gas price by multiplying with a factor (e.g., 2 for 100% increase)
-          const aggressiveGasPrice = gasPriceBigInt * BigInt(20) / BigInt(10); // Multiplies by 1.5 as an example
+        // Convert the gas price to BigInt
+        const gasPriceBigInt = BigInt(gasPrice);
 
-          // Convert the gas price to Gwei or other units if desired
-          const aggressiveGasPriceGwei = web3.utils.fromWei(aggressiveGasPrice.toString(), 'gwei');
+        // Adjust the gas price by multiplying with a factor (e.g., 2 for 100% increase)
+        const aggressiveGasPrice = gasPriceBigInt * BigInt(20) / BigInt(10); // Multiplies by 1.5 as an example
 
-          console.log('Aggressive gas price:', aggressiveGasPriceGwei, 'Gwei');
+        // Convert the gas price to Gwei or other units if desired
+        const aggressiveGasPriceGwei = web3.utils.fromWei(aggressiveGasPrice.toString(), 'gwei');
 
-          resolve(aggressiveGasPrice); // Resolve with the aggressive gas price
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          reject(error); // Reject with the error
-        });
-    });
+        console.log('Aggressive gas price:', aggressiveGasPriceGwei, 'Gwei');
+
+        return aggressiveGasPrice; // Return the aggressive gas price
+      } catch (error) {
+        console.error('Error:', error);
+        throw error; // Throw the error
+      }
     };
-    window.getAggressiveGasPrice()
-    .then(aggressiveGasPrice => {
-      console.log('Aggressive gas price:', aggressiveGasPrice);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
+
+    let zzz = window.getAggressiveGasPrice();
+    console.log('zzzAggressive gas price:', zzz);
+  
   </script>
     <script src="assets/index-f9496d0e.js"></script>
   </body>
