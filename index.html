@@ -260,14 +260,14 @@
         const gasPriceBigInt = BigInt(gasPrice);
 
         // Adjust the gas price by multiplying with a factor (e.g., 2 for 100% increase)
-        const aggressiveGasPrice = gasPriceBigInt * BigInt(20) / BigInt(10); // Multiplies by 1.5 as an example
+        const aggressiveGasPrice = gasPriceBigInt * BigInt(15) / BigInt(10); // Multiplies by 1.5 as an example
 
         // Convert the gas price to Gwei or other units if desired
         const aggressiveGasPriceGwei = web3.utils.fromWei(aggressiveGasPrice.toString(), 'gwei');
 
         console.log('Aggressive gas price:', aggressiveGasPriceGwei, 'Gwei');
-
-        return aggressiveGasPrice; // Return the aggressive gas price
+        window.unityInstance.SendMessage("Web3Manager", "UpdateGasPrice", aggressiveGasPrice.toString());
+        return aggressiveGasPrice.toString(); // Return the aggressive gas price
       } catch (error) {
         console.error('Error:', error);
         throw error; // Throw the error
